@@ -3,12 +3,34 @@ package com.example.notes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.util.Objects;
+
+@Entity(tableName = "notes_table")
 public class Note implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "note_title")
     private String title;
+
+    @ColumnInfo(name = "note_description")
     private String description;
+
+    @ColumnInfo(name = "note_date")
     private String date;
 
+    public Note(String title, String description, String date) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+    }
+
+    //region Parcelization
     protected Note(Parcel in) {
         title = in.readString();
         description = in.readString();
@@ -38,6 +60,17 @@ public class Note implements Parcelable {
             return new Note[size];
         }
     };
+
+    //endregionn
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
